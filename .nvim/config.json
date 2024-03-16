@@ -1,0 +1,9 @@
+{
+  "commands": {
+    "test": "go test ./... -v",
+    "run": "go run main.go",
+    "tidy": "go mod tidy",
+    "build": "go build -o bin/go-test-pretty main.go",
+    "test:with:pretty": "go test ./... -v | ./bin/go-test-pretty"
+   }
+}
