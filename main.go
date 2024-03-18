@@ -5,19 +5,20 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/dimaportenko/go-test-pretty/style"
 	"github.com/fatih/color"
+
+	"github.com/dimaportenko/go-test-pretty/style"
 )
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
-  stylers := getTestOutputStylers()
+	stylers := getTestOutputStylers()
 
 	for scanner.Scan() {
 		line := scanner.Text()
 
-    line = style.StyleLine(line, stylers)
+		line = style.StyleLine(line, stylers)
 		println(line)
 	}
 
@@ -26,14 +27,18 @@ func main() {
 	}
 }
 
+func getStylerRegexFromText(text string) regexp.Regexp {
+	return *regexp.MustCompile(`\b` + text + `\b`)
+}
+
 func getTestOutputStylers() []style.Styler {
-	passRegex := regexp.MustCompile(`\bPASS\b`)
-	failRegex := regexp.MustCompile(`\bFAIL\b`)
+	passRegex := getStylerRegexFromText("PASS")
+	failRegex := getStylerRegexFromText("FAIL")
 
-  stylers := []style.Styler{
-    {Regexp: *passRegex, Color: *color.New(color.FgGreen)},
-    {Regexp: *failRegex, Color: *color.New(color.FgRed)},
-  }
+	stylers := []style.Styler{
+		{Regexp: passRegex, Color: *color.New(color.FgGreen)},
+		{Regexp: failRegex, Color: *color.New(color.FgRed)},
+	}
 
-  return stylers
+	return stylers
 }

@@ -32,7 +32,7 @@ func TestOutputStylers(t *testing.T) {
 		test.AssertCorrectMessage(t, result, expected)
 	})
 
-	t.Run("Test pretty lines failed", func(t *testing.T) {
-		t.Errorf("This test failed")
-	})
+	// t.Run("Test pretty lines failed", func(t *testing.T) {
+	// 	t.Errorf("This test failed")
+	// })
 }
